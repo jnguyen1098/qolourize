@@ -7,7 +7,7 @@ Based on [this code](https://github.com/dwave-examples/graph-coloring), this pro
 To run the demo:
 
 ```bash
-python graph_coloring.py graph_file output_name
+python qolourize.py graph_file output_name
 ```
 
 The program will produce a solution which might look like this:

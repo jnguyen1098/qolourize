@@ -1,4 +1,4 @@
-# Graph Coloring
+# Qolourize
 
 This program takes in a graph as input, attempts to generate a graph colouring solution, and then exports it in Graphviz DOT format. The original [repo](https://github.com/dwave-examples/graph-coloring) I adapted my code from used hard-coded examples and lacked importing/exporting, so this project aims to add these features.
 

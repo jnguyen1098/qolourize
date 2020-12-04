@@ -13,12 +13,12 @@ python graph_coloring.py graph_file output_name
 The program will produce a solution which might look like this:
 
 ```
-Solution:  {0: 0, 1: 1, 2: 2, 3: 0, 4: 1, 5: 0, 6: 1}
-Solution energy:  5.0
-Solution validity:  True
+Solution: {1: 0, 2: 1, 3: 1, 4: 2, 7: 0, 8: 2, 5: 0, 9: 2, 6: 1, 10: 0}
+Solution energy: 9.0
+Solution validity: True
 ```
 
-and then export files representing the visual output (.SVG, .PNG, and .GV). For example:
+and then export files representing the visual output (.SVG, .PNG, and .GV). For example, the ccolouring solution to the Petersen graph:
 
 ![Color Plot](readme_imgs/petersen.png)
 

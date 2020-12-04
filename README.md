@@ -10,8 +10,23 @@ To run the demo:
 python qolourize.py graph_file output_name
 ```
 
-There are three files you can use in place of `graph_file`: `graph_1.txt`, `graph_2.txt`, and `graph_3.txt`. The format for graphs is just `node_number,node_number` on every line. For example, the [Petersen graph](https://en.wikipedia.org/wiki/Petersen_graph) (aka `graph_3.txt`) is represented as:
+There are three example files you can use in place of `graph_file`: `graph_1.txt`, `graph_2.txt`, and `graph_3.txt`. 
 
+In running Qolourize with `graph_3.txt` it will produce a solution which might look like this:
+
+```
+Solution: {1: 0, 2: 1, 3: 1, 4: 2, 7: 0, 8: 2, 5: 0, 9: 2, 6: 1, 10: 0}
+Solution energy: 9.0
+Solution validity: True
+```
+
+and then export files representing the visual output (.SVG, .PNG, and .GV). For example, the colouring solution to the Petersen graph mentioned above:
+
+![Color Plot](readme_imgs/petersen.png)
+
+Here we see that no neighboring nodes have the same color. The validity check checks that that is the case.
+
+The format for input graph files is just `node_number,node_number` on every line. For example, the [Petersen graph](https://en.wikipedia.org/wiki/Petersen_graph) (aka `graph_3.txt`) is represented as:
 ```
 1,2
 1,3
@@ -30,20 +45,6 @@ There are three files you can use in place of `graph_file`: `graph_1.txt`, `grap
 9,10
 
 ```
-
-In running Qolourize with `graph_3.txt` it will produce a solution which might look like this:
-
-```
-Solution: {1: 0, 2: 1, 3: 1, 4: 2, 7: 0, 8: 2, 5: 0, 9: 2, 6: 1, 10: 0}
-Solution energy: 9.0
-Solution validity: True
-```
-
-and then export files representing the visual output (.SVG, .PNG, and .GV). For example, the colouring solution to the Petersen graph mentioned above:
-
-![Color Plot](readme_imgs/petersen.png)
-
-Here we see that no neighboring nodes have the same color. The validity check checks that that is the case.
 
 _(the rest of the README comes from the [original repo](https://github.com/dwave-examples/graph-coloring))_
 

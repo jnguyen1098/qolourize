@@ -1,19 +1,13 @@
 # Graph Coloring
 
-A demo of graph coloring using Leap's hybrid discrete quadratic model (DQM) solver.
-
-![Original Plot](readme_imgs/not_color_yet.png)
-
-Figure: The graph that we want to color, so that no neighboring nodes have the same color.
-
-We want to color this graph so that no neighboring nodes have the same color. This is a well-known problem (https://en.wikipedia.org/wiki/Graph_coloring) which is already in the D-Wave Collection of Examples (https://github.com/dwave-examples/map-coloring) In this repo, we're going to use the D-Wave DQM solver.
+Based on [this code](https://github.com/dwave-examples/graph-coloring), this program will take in a graph as input, attempt to generate a graph colouring solution and then export it in Graphviz DOT format.
 
 ## Usage
 
 To run the demo:
 
 ```bash
-python graph_coloring.py
+python graph_coloring.py graph_file output_name
 ```
 
 The program will produce a solution which might look like this:
@@ -24,11 +18,13 @@ Solution energy:  5.0
 Solution validity:  True
 ```
 
-and when the solution is drawn:
+and then export files representing the visual output (.SVG, .PNG, and .GV). For example:
 
-![Color Plot](readme_imgs/color.png)
+![Color Plot](readme_imgs/petersen.png)
 
-we see that no neighboring nodes have the same color. The validity check checks that that is the case.
+Here we see that no neighboring nodes have the same color. The validity check checks that that is the case.
+
+_(the rest of the README comes from the [original repo](https://github.com/dwave-examples/graph-coloring))_
 
 ## Code Overview
 Leap's DQM solver accepts problems expressed in terms of a DiscreteQuadraticModel object. The DiscreteQuadraticModel contains two dictionaries:

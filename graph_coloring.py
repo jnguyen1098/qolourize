@@ -32,9 +32,12 @@ colours = {0: 'green', 1: 'red', 2: 'blue', 3: 'yellow'}
 nodes = [0, 1, 2, 3, 4, 5, 6]
 edges = [(0, 1), (1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (0, 6)]
 
+# nodes = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+# edges = [(0, 1), (0, 3), (1, 2), (1, 3), (1, 4), (1, 5), (2, 5), (3, 6), (4, 5), (4, 6), (4, 7), (4, 8), (5, 8), (7, 8)]
+
 # Make Networkx graph of a hexagon
 G = nx.Graph()
-G.add_edges_from([(0, 1), (1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (0, 6)])
+G.add_edges_from(edges)
 n_edges = len(G.edges)
 
 # initial value of Lagrange parameter
@@ -74,7 +77,7 @@ print("Solution: ", sample)
 print("Solution energy: ", energy)
 print("Solution validity: ", valid)
 
-print('digraph test {')
+print('digraph solution {')
 for node in nodes:
     print(f'    "{node}" [shape=circle, style=filled, fillcolor={colours[sample[node]]}];')
 for edge in edges:

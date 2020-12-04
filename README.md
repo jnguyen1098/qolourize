@@ -1,6 +1,6 @@
 # Graph Coloring
 
-Based on [this code](https://github.com/dwave-examples/graph-coloring), this program will take in a graph as input, attempt to generate a graph colouring solution and then export it in Graphviz DOT format.
+This program takes in a graph as input, attempts to generate a graph colouring solution, and then exports it in Graphviz DOT format. The original [repo](https://github.com/dwave-examples/graph-coloring) I adapted my code from used hard-coded examples and lacked importing/exporting, so this project aims to add these features.
 
 ## Usage
 
@@ -10,7 +10,28 @@ To run the demo:
 python qolourize.py graph_file output_name
 ```
 
-The program will produce a solution which might look like this:
+There are three files you can use in place of `graph_file`: `graph_1.txt`, `graph_2.txt`, and `graph_3.txt`. The format for graphs is just `node_number,node_number` on every line. For example, the [Petersen graph](https://en.wikipedia.org/wiki/Petersen_graph) (aka `graph_3.txt`) is represented as:
+
+```
+1,2
+1,3
+1,4
+2,7
+2,8
+3,5
+3,9
+4,6
+4,10
+5,6
+5,8
+6,7
+7,9
+8,10
+9,10
+
+```
+
+In running Qolourize with `graph_3.txt` it will produce a solution which might look like this:
 
 ```
 Solution: {1: 0, 2: 1, 3: 1, 4: 2, 7: 0, 8: 2, 5: 0, 9: 2, 6: 1, 10: 0}
@@ -18,7 +39,7 @@ Solution energy: 9.0
 Solution validity: True
 ```
 
-and then export files representing the visual output (.SVG, .PNG, and .GV). For example, the colouring solution to the Petersen graph:
+and then export files representing the visual output (.SVG, .PNG, and .GV). For example, the colouring solution to the Petersen graph mentioned above:
 
 ![Color Plot](readme_imgs/petersen.png)
 

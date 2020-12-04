@@ -1,26 +1,23 @@
-# Copyright 2020 D-Wave Systems Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# Code adapted from https://github.com/dwave-examples/graph-coloring
 
 import networkx as nx
 from dimod import DiscreteQuadraticModel
 from dwave.system import LeapHybridDQMSampler
 
+import pygraphviz
+import pydot
+import sys
+
+# Command line args
+if len(sys.argv) != 3:
+    print('Usage: program input_graph output_name')
+    exit()
+
+output_name = sys.argv[1]
+
 # Graph coloring with DQM solver
 
-# input: number of colors in the graph
-# the four-color theorem indicates that four colors suffice for any planar
-# graph
+# The four-colour theorem states that we only need 4 colours
 num_colors = 4
 colors = range(num_colors)
 
@@ -73,14 +70,27 @@ for edge in G.edges:
         valid = False
         break
 
-print("Solution: ", sample)
-print("Solution energy: ", energy)
-print("Solution validity: ", valid)
+print("Solution:", sample)
+print("Solution energy:", energy)
+print("Solution validity:", valid)
+print()
 
-print('digraph solution {')
+G = pygraphviz.AGraph(directed=False)
+G.layout(prog='dot')
 for node in nodes:
-    print(f'    "{node}" [shape=circle, style=filled, fillcolor={colours[sample[node]]}];')
+    G.add_node(node, shape="circle", style="filled", color=colours[sample[node]])
 for edge in edges:
-    print(f'    "{edge[0]}" -> "{edge[1]}" [dir=none];')
-print('}')
+    G.add_edge(edge[0], edge[1], dir="none")
+
+print(f"Exporting {output_name}.gv")
+G.write(f"{output_name}.gv")
+
+graphs = pydot.graph_from_dot_file(f"{output_name}.gv")
+
+print(f"Exporting {output_name}.svg")
+graphs[0].write_svg(f"{output_name}.svg")
+
+print(f"Exporting {output_name}.png")
+graphs[0].write_png(f"{output_name}.png")
+exit()
 

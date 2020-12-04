@@ -7,32 +7,45 @@ from dwave.system import LeapHybridDQMSampler
 import pygraphviz
 import pydot
 import sys
+import csv
 
 # Command line args
 if len(sys.argv) != 3:
     print('Usage: program input_graph output_name')
     exit()
 
-output_name = sys.argv[1]
+output_name = sys.argv[2]
 
-# Graph coloring with DQM solver
+nodes = []
+edges = []
+
+print("Reading in edges")
+with open(sys.argv[1], "r") as input_file:
+    reader = csv.reader(input_file)
+    for row in reader:
+        edges.append((int(row[0]), int(row[1])))
+
+print("Reading in nodes")
+for edge in edges:
+    if edge[0] not in nodes:
+        nodes.append(edge[0])
+    if edge[1] not in nodes:
+        nodes.append(edge[1])
+
+print()
+print(f"Nodes: {nodes}")
+print(f"Edges: {edges}")
+print()
 
 # The four-colour theorem states that we only need 4 colours
 num_colors = 4
 colors = range(num_colors)
+colours = {0: 'green', 1: 'red', 2: 'blue', 3: 'yellow'}
 
-# Initialize the DQM object
+print("Initializing discrete quadratic model")
 dqm = DiscreteQuadraticModel()
 
-# Create our stuff
-colours = {0: 'green', 1: 'red', 2: 'blue', 3: 'yellow'}
-nodes = [0, 1, 2, 3, 4, 5, 6]
-edges = [(0, 1), (1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (0, 6)]
-
-# nodes = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-# edges = [(0, 1), (0, 3), (1, 2), (1, 3), (1, 4), (1, 5), (2, 5), (3, 6), (4, 5), (4, 6), (4, 7), (4, 8), (5, 8), (7, 8)]
-
-# Make Networkx graph of a hexagon
+print("Creating graph model")
 G = nx.Graph()
 G.add_edges_from(edges)
 n_edges = len(G.edges)
@@ -45,6 +58,7 @@ lagrange = max(colors)
 # have the effect of minimizing the number of colors used.
 # We penalize edge connections by the Lagrange parameter, to encourage
 # connected nodes to have different colors.
+print("Loading DQM, defining variables, and setting biases/weights")
 for p in G.nodes:
     dqm.add_variable(num_colors, label=p)
 for p in G.nodes:
@@ -52,17 +66,17 @@ for p in G.nodes:
 for p0, p1 in G.edges:
     dqm.set_quadratic(p0, p1, {(c, c): lagrange for c in colors})
 
-# Initialize the DQM solver
+print("Initializing DQM solver")
 sampler = LeapHybridDQMSampler()
 
-# Solve the problem using the DQM solver
+print("Solving graph colouring")
 sampleset = sampler.sample_dqm(dqm)
 
-# get the first solution, and print it
+print("Extracting solution")
 sample = sampleset.first.sample
 energy = sampleset.first.energy
 
-# check that colors are different
+print("Verifying correctness of solution")
 valid = True
 for edge in G.edges:
     i, j = edge
@@ -70,15 +84,21 @@ for edge in G.edges:
         valid = False
         break
 
+print()
 print("Solution:", sample)
 print("Solution energy:", energy)
 print("Solution validity:", valid)
 print()
 
+print("Creating Graphviz model")
 G = pygraphviz.AGraph(directed=False)
 G.layout(prog='dot')
+
+print("Appending nodes")
 for node in nodes:
     G.add_node(node, shape="circle", style="filled", color=colours[sample[node]])
+
+print("Appending edges")
 for edge in edges:
     G.add_edge(edge[0], edge[1], dir="none")
 

@@ -10,7 +10,7 @@ To run the demo:
 python qolourize.py graph_file output_name
 ```
 
-There are three example files you can use in place of `graph_file`: `graph_1.txt`, `graph_2.txt`, and `graph_3.txt`. 
+Where `graph_file` is a graph file. Included examples you can use are `graph_1.txt`, `graph_2.txt`, and `graph_3.txt`. You must also have an API key to use DWave's computers!
 
 In running Qolourize with `graph_3.txt` it will produce a solution which might look like this:
 

@@ -18,7 +18,7 @@ Solution energy: 9.0
 Solution validity: True
 ```
 
-and then export files representing the visual output (.SVG, .PNG, and .GV). For example, the ccolouring solution to the Petersen graph:
+and then export files representing the visual output (.SVG, .PNG, and .GV). For example, the colouring solution to the Petersen graph:
 
 ![Color Plot](readme_imgs/petersen.png)
 
